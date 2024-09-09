@@ -1,0 +1,38 @@
+select name from country 
+where Continent = "South America";
+
+select Population from country where name = "Germany";
+
+select Name from city where CountryCode = (select code from country where name = 'Japan');
+
+select name, population from country where continent = 'Africa' order by population DESC limit 3;
+
+select name from country join countrylanguage on country.code = countrylanguage.CountryCode where countrylanguage.language = "French" AND countrylanguage.IsOfficial = "T";
+
+select Album.title from Album join Artist ON Album.ArtistId = Artist.ArtistId where Artist.name = 'AC/DC';
+
+select FirstName, LastName, Email FROM Customer Where Country = "Brazil";
+
+select Name from Playlist;
+
+select count(*) as TotalTracks From Track Join Genre on Track.GenreId = Genre.GenreId Where Genre.Name = "Rock";
+
+select Employee.FirstName, Employee.LastName from Employee join Employee as Manager on Employee.ReportsTo = Manager.EmployeeId where Manager.FirstName = 'Nancy' and Manager.LastName = 'Edwards';
+
+select Customer.FirstName, Customer.LastName, SUM(Invoice.Total) as TotalSales from Customer join Invoice on Customer.CustomerId = Invoice.CustomerId group by Customer.CustomerId order by TotalSales desc;
+
+CREATE TABLE Bakers ( BakerID INT PRIMARY KEY AUTO_INCREMENT, FirstName VARCHAR(255), LastName VARCHAR(255), Specialty VARCHAR(255), ExperienceYears INT );
+
+CREATE TABLE Products ( ProductID INT PRIMARY KEY AUTO_INCREMENT, ProductName VARCHAR(255), Price DECIMAL(10, 2), BakerID INT, FOREIGN KEY (BakerID) REFERENCES Bakers(BakerID) );
+
+CREATE TABLE Orders ( OrderID INT PRIMARY KEY AUTO_INCREMENT, ProductID INT, Quantity INT, OrderDate DATE, FOREIGN KEY (ProductID) REFERENCES Products(ProductID) );
+
+INSERT INTO Bakers (FirstName, LastName, Specialty, ExperienceYears) VALUES ('Grace', 'Brown', 'Cakes', 10), ('Macy', 'Drumheller', 'Pastries', 7), ('Ainsley', 'Flatin', 'Cupcakes', 5), ('Morgan', 'McKinley', 'Breads', 8), ('Megan', 'Spillane', 'Cookies', 6);
+
+INSERT INTO Products (ProductName, Price, BakerID) VALUES ('Chocolate Cake', 25.00, 1), ('Croissant', 3.00, 2), ('Vanilla Cupcake', 2.50, 3), ('Sourdough Bread', 5.00, 4), ('Chocolate Chip Cookie', 1.50, 5);
+
+SELECT Bakers.FirstName, Bakers.LastName, Products.ProductName FROM Bakers JOIN Products ON Bakers.BakerID = Products.BakerID;
+
+SELECT Products.ProductName, SUM(Orders.Quantity) AS TotalOrders FROM Orders JOIN Products ON Orders.ProductID = Products.ProductID GROUP BY Products.ProductName;
+
+SELECT ProductName, Price FROM Products;
